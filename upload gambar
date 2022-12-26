@@ -1,0 +1,32 @@
+if($request->hasFile('foto')){
+			if ($emp->foto) {
+				  File::delete(public_path('/foto/'.$emp->foto));
+            }
+			$file = $request->file('foto');
+			$file_extension = $file->getClientOriginalExtension();
+			$lokasiFile = public_path().'/foto';
+
+			$this->fileName = 'foto-'.$request->name.Str::random(5).'.'.$file_extension;
+			// $this->fileName = $request->tahun_terbit.$request->singkatan_jenis.$kodeWilayah.$nomorPeraturan.'.'.$file_extension;
+			$request->file('foto')->move($lokasiFile,$this->fileName);
+			$fileName = $this->fileName;
+		} else {
+			$this->fileName = $emp->foto;
+			$fileName = $this->fileName;
+		}
+    
+    
+    
+    
+    
+    
+    delete
+    
+        $id = $request->id;
+        $emp = Guru::find($id);
+        if (File::delete(public_path('/guru/'.$emp->image))) {
+            Guru::destroy($id);
+        }else{
+			   Guru::destroy($id);
+		   }
+     }
