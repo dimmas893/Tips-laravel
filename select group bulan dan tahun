@@ -1,0 +1,1 @@
+ $absen = Absen::where('siswa_id', $siswa->id)->select(DB::raw('YEAR(tanggal) year, MONTH(tanggal) month'))->groupby('year', 'month')->get();
