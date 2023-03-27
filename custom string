@@ -1,0 +1,3 @@
+substr($emp->jam_keluar, 0, 5)
+
+costum string
