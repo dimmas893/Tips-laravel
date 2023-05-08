@@ -1,0 +1,12 @@
+        $DataSeleksi = [];
+        if (isset($request['nomor_pendaftaran'])) {
+            foreach ($request['nomor_pendaftaran'] as $index => $nomorpen) {
+                $seleksi = Seleksi::with('pendaftaran')->whereHas('pendaftaran', function ($q) use ($nomorpen) {
+                    $q->where('nomor_pendaftaran', $nomorpen);
+                })->first();
+                $seleksi->update(['nilai' => $request['nilai'][$index]]);
+                array_push($DataSeleksi, $seleksi);
+            }
+        }
+        $datajadi = collect($DataSeleksi)->sortByDesc('nilai')->all();
+        dd($datajadi);
