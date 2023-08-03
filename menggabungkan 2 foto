@@ -1,0 +1,7 @@
+
+            //waterMarkUrl file watermark
+            $waterMarkUrl = public_path('tes.png');
+            //file yang di timpa watermark/ file inti
+            $image = Image::make(public_path('uploads/post_image/' . $url));
+            $image->insert($waterMarkUrl, 'bottom-left', 5, 5);
+            $image->save(public_path('uploads/thumbnails/' . $post->id . '_thumb.jpg'));
