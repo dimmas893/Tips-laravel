@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
+</head>
+
+<body>
+    <div id="app">
+        <button id="download-btn">Download Video</button>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    <script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
+    <script>
+        let downloadNotification; // Untuk menyimpan objek notifikasi
+
+        document.getElementById('download-btn').addEventListener('click', function() {
+            // Mulai permintaan unduh
+            downloadVideo();
+        });
+
+        function downloadVideo() {
+            // Tampilkan notifikasi bahwa unduhan dimulai
+            alertDownloading();
+
+            // URL untuk mengunduh video dari folder public
+            const videoUrl = '{{ asset('Ghost.Wife.2018.HDRip.720p.rmcmv.me.mp4') }}';
+
+            // Kirim permintaan AJAX untuk mengunduh video
+            fetch(videoUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    // Unduh file
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'video.mp4';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+
+                    // Sembunyikan notifikasi "downloading..."
+                    hideAlertDownloading();
+
+                    // Tampilkan notifikasi bahwa unduhan selesai
+                    printDownloadCompleted();
+                })
+                .catch(error => {
+                    console.error('Error downloading video:', error);
+                });
+        }
+
+        function alertDownloading() {
+            downloadNotification = iziToast.show({
+                theme: 'light',
+                icon: 'fa fa-download',
+                title: 'downloading....',
+                message: 'silahkan tunggu...',
+                position: 'topRight',
+                timeout: false, // Notifikasi akan tetap muncul
+                progressBar: true,
+                close: false // Tidak menampilkan tombol tutup
+            });
+        }
+
+        function hideAlertDownloading() {
+            const alert = document.querySelector('.iziToast');
+            alert.style.display = 'none';
+        }
+
+        function printDownloadCompleted() {
+            iziToast.info({
+                title: 'Selesai......',
+                message: 'file berhasil di unduh.....',
+                position: 'topRight'
+            });
+        }
+    </script>
+
+</body>
+
+</html>
