@@ -1,0 +1,17 @@
+use Stevebauman\Location\Facades\Location;
+
+  $currentUrl = url()->current();
+        $session = $request->session()->getId();
+        $lokasi = !empty(Location::get($request->ip())) ? Location::get($request->ip())->countryName : '';
+        $meta = json_encode(Location::get($request->ip()));
+
+
+        $analis =  Analytic::create([
+            'session' => $session,
+            'country' => $lokasi,
+            'uri' => $currentUrl,
+            'ip' => $request->ip(),
+            'user_id' =>  null,
+            'post_id' => $post->id,
+            'meta' => $meta,
+        ]);
